@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập menu ngang - Nguyễn Trung Trường</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 20px;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            text-align: center;
+            color: #f00;
+            font-size: 28px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        /* Bài 1: Menu ngang một cấp */
+        .menu {
+            width: 1200px;
+            max-width: 100%;
+            min-height: 50px;
+            margin: auto;
+            background-color: #ccc;
+        }
+
+        .menu ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .menu ul::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .menu ul li {
+            float: left;
+        }
+
+        .menu ul li a {
+            display: block;
+            padding: 0 20px;
+            line-height: 50px;
+            color: #000;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .menu ul li a:hover,
+        .menu ul li a:focus-visible {
+            background-color: #333;
+            color: #fff;
+            line-height: 48px;
+            border-bottom: 2px solid #f00;
+        }
+
+        /* Bài 2: Menu ngang hai cấp */
+        .menu_ngang {
+            width: 960px;
+            max-width: 100%;
+            min-height: 50px;
+            margin: auto;
+            background-color: #ccc;
+        }
+
+        .menu_ngang ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .menu_ngang > ul::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .menu_ngang > ul > li {
+            float: left;
+            position: relative;
+        }
+
+        .menu_ngang > ul > li > a {
+            display: block;
+            padding: 0 20px;
+            line-height: 50px;
+            border-right: 1px solid #999;
+            color: #333;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .menu_ngang > ul > li:hover > a,
+        .menu_ngang > ul > li:focus-within > a {
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* Ẩn menu con khi chưa tương tác */
+        .menu_ngang ul li ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 170px;
+            background-color: #ccc;
+            z-index: 10;
+        }
+
+        .menu_ngang ul li ul li a {
+            display: block;
+            width: 100%;
+            padding: 0 20px;
+            line-height: 36px;
+            border-bottom: 1px solid #fff;
+            color: #333;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .menu_ngang ul li ul li a:hover,
+        .menu_ngang ul li ul li a:focus-visible {
+            background-color: #333;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* Hiện menu con bằng chuột hoặc phím Tab */
+        .menu_ngang > ul > li:hover > ul,
+        .menu_ngang > ul > li:focus-within > ul {
+            display: block;
+        }
+
+        footer {
+            max-width: 960px;
+            margin: 230px auto 0;
+            padding-top: 16px;
+            border-top: 1px solid #ccc;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        footer a {
+            color: #155e75;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <section>
+            <h1>MINH HỌA MENU NGANG - MỘT CẤP</h1>
+
+            <nav class="menu" aria-label="Menu ngang một cấp">
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Dự án</a></li>
+                    <li><a href="#">Sản phẩm</a></li>
+                    <li><a href="#">Dịch vụ</a></li>
+                    <li><a href="#">Tin tức</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </nav>
+        </section>
+
+        <section>
+            <h1>MINH HỌA MENU NGANG - HAI CẤP</h1>
+
+            <nav class="menu_ngang" aria-label="Menu ngang hai cấp">
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Giới thiệu</a></li>
+
+                    <li>
+                        <a href="#">Sản phẩm</a>
+
+                        <ul>
+                            <li><a href="#">Tivi</a></li>
+                            <li><a href="#">Tủ lạnh</a></li>
+                            <li><a href="#">Laptop</a></li>
+                            <li><a href="#">Máy tính bảng</a></li>
+                            <li><a href="#">Điện thoại</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="#">Dịch vụ</a></li>
+                    <li><a href="#">Tin tức</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </nav>
+        </section>
+    </main>
+</body>
+</html>
