@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách sản phẩm - CSS Box Model</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 30px 15px;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: white;
+        }
+        h1 {
+            text-align: center;
+            font-size: 26px;
+        }
+        .danh-sach {
+            width: 880px;
+            max-width: 100%;
+            margin: 30px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        .hh-box {
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            width: 200px;
+            height: 180px;
+            margin: 25px 5px 10px;
+            padding: 15px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 5px silver;
+            text-align: center;
+        }
+
+        .hh-box:hover {
+            box-shadow: 0 0 5px red;
+        }
+        .hh-box-name {
+            position: absolute;
+            top: -22px;
+            left: 0;
+            width: 100%;
+            margin: 0;
+            font-size: 15px;
+            font-weight: normal;
+            text-align: center;
+        }
+        .hh-box-image {
+            width: 130px;
+            height: 130px;
+            object-fit: contain;
+        }
+        .hh-box-icon {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #e53935;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .hh-box-price {
+            position: absolute;
+            left: 8px;
+            bottom: 8px;
+            color: #666;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .hh-box-actions {
+            position: absolute;
+            right: 8px;
+            bottom: 5px;
+            width: 25px;
+        }
+        .hh-box-actions a {
+            display: block;
+            width: 25px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            text-decoration: none;
+            color: #777;
+            font-size: 22px;
+            cursor: pointer;
+        }
+        .hh-box-actions a:hover,
+        .hh-box-actions a:focus-visible {
+            color: #e53935;
+            background-color: #eee;
+            border-radius: 4px;
+        }
+        .phan-trang {
+            margin: 10px 0 5px;
+        }
+        .phan-trang a {
+            display: inline-block;
+            margin: 3px;
+            padding: 8px 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: #333;
+            background-color: #f5f5f5;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .phan-trang a:hover,
+        .phan-trang a:focus-visible {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>DANH SÁCH SẢN PHẨM</h1>
+
+    <main class="danh-sach">
+        <article class="hh-box">
+            <h2 class="hh-box-name">Nikon D3100</h2>
+            <img class="hh-box-image"
+                 src="images/product.png" alt="Máy ảnh Nikon D3100">
+            <div class="hh-box-price">$99.99</div>
+            <div class="hh-box-actions">
+                <a href="#" aria-label="Yêu thích sản phẩm 1">☆</a>
+                <a href="#" aria-label="Liên hệ về sản phẩm 1">✉</a>
+                <a href="#" aria-label="Thêm sản phẩm 1 vào giỏ">🛒</a>
+            </div>
+            <span class="hh-box-icon">NEW</span>
+        </article>
+
+        <article class="hh-box">
+            <h2 class="hh-box-name">Nikon D3100</h2>
+            <img class="hh-box-image"
+                 src="images/product.png" alt="Máy ảnh Nikon D3100">
+            <div class="hh-box-price">$99.99</div>
+            <div class="hh-box-actions">
+                <a href="#" aria-label="Yêu thích sản phẩm 2">☆</a>
+                <a href="#" aria-label="Liên hệ về sản phẩm 2">✉</a>
+                <a href="#" aria-label="Thêm sản phẩm 2 vào giỏ">🛒</a>
+            </div>
+            <span class="hh-box-icon">NEW</span>
+        </article>
+
+        <article class="hh-box">
+            <h2 class="hh-box-name">Nikon D3100</h2>
+            <img class="hh-box-image"
+                 src="images/product.png" alt="Máy ảnh Nikon D3100">
+            <div class="hh-box-price">$99.99</div>
+            <div class="hh-box-actions">
+                <a href="#" aria-label="Yêu thích sản phẩm 3">☆</a>
+                <a href="#" aria-label="Liên hệ về sản phẩm 3">✉</a>
+                <a href="#" aria-label="Thêm sản phẩm 3 vào giỏ">🛒</a>
+            </div>
+            <span class="hh-box-icon">NEW</span>
+        </article>
+
+        <article class="hh-box">
+            <h2 class="hh-box-name">Nikon D3100</h2>
+            <img class="hh-box-image"
+                 src="images/product.png" alt="Máy ảnh Nikon D3100">
+            <div class="hh-box-price">$99.99</div>
+            <div class="hh-box-actions">
+                <a href="#" aria-label="Yêu thích sản phẩm 4">☆</a>
+                <a href="#" aria-label="Liên hệ về sản phẩm 4">✉</a>
+                <a href="#" aria-label="Thêm sản phẩm 4 vào giỏ">🛒</a>
+            </div>
+            <span class="hh-box-icon">NEW</span>
+        </article>
+
+        <article class="hh-box">
+            <h2 class="hh-box-name">Nikon D3100</h2>
+            <img class="hh-box-image"
+                 src="images/product.png" alt="Máy ảnh Nikon D3100">
+            <div class="hh-box-price">$99.99</div>
+            <div class="hh-box-actions">
+                <a href="#" aria-label="Yêu thích sản phẩm 5">☆</a>
+                <a href="#" aria-label="Liên hệ về sản phẩm 5">✉</a>
+                <a href="#" aria-label="Thêm sản phẩm 5 vào giỏ">🛒</a>
+            </div>
+            <span class="hh-box-icon">NEW</span>
+        </article>
+
+        <article class="hh-box">
+            <h2 class="hh-box-name">Nikon D3100</h2>
+            <img class="hh-box-image"
+                 src="images/product.png" alt="Máy ảnh Nikon D3100">
+            <div class="hh-box-price">$99.99</div>
+            <div class="hh-box-actions">
+                <a href="#" aria-label="Yêu thích sản phẩm 6">☆</a>
+                <a href="#" aria-label="Liên hệ về sản phẩm 6">✉</a>
+                <a href="#" aria-label="Thêm sản phẩm 6 vào giỏ">🛒</a>
+            </div>
+            <span class="hh-box-icon">NEW</span>
+        </article>
+
+        <article class="hh-box">
+            <h2 class="hh-box-name">Nikon D3100</h2>
+            <img class="hh-box-image"
+                 src="images/product.png" alt="Máy ảnh Nikon D3100">
+            <div class="hh-box-price">$99.99</div>
+            <div class="hh-box-actions">
+                <a href="#" aria-label="Yêu thích sản phẩm 7">☆</a>
+                <a href="#" aria-label="Liên hệ về sản phẩm 7">✉</a>
+                <a href="#" aria-label="Thêm sản phẩm 7 vào giỏ">🛒</a>
+            </div>
+            <span class="hh-box-icon">NEW</span>
+        </article>
+
+        <article class="hh-box">
+            <h2 class="hh-box-name">Nikon D3100</h2>
+            <img class="hh-box-image"
+                 src="images/product.png" alt="Máy ảnh Nikon D3100">
+            <div class="hh-box-price">$99.99</div>
+            <div class="hh-box-actions">
+                <a href="#" aria-label="Yêu thích sản phẩm 8">☆</a>
+                <a href="#" aria-label="Liên hệ về sản phẩm 8">✉</a>
+                <a href="#" aria-label="Thêm sản phẩm 8 vào giỏ">🛒</a>
+            </div>
+            <span class="hh-box-icon">NEW</span>
+        </article>
+
+        <nav class="phan-trang" aria-label="Phân trang sản phẩm">
+            <a href="#">First</a>
+            <a href="#">Previous</a>
+            <a href="#">Next</a>
+            <a href="#">Last</a>
+        </nav>
+    </main>
+</body>
+</html>
