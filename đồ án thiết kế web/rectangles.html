@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rectangles</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+            font-family: "Times New Roman", serif;
+        }
+        .outside {
+            width: 650px;
+            max-width: 100%;
+            margin: 20px auto;
+            border: 7px dotted blue;
+            border-radius: 35px;
+            padding: 35px;
+        }
+        .middle {
+            border: 3px dashed red;
+            border-radius: 20px;
+            padding: 35px;
+        }
+        .inner {
+            border: 3px solid green;
+            border-radius: 6px;
+            padding: 35px 15px;
+            text-align: center;
+            font-size: 40px;
+        }
+        @media (max-width: 500px) {
+            .outside,
+            .middle {
+                padding: 15px;
+            }
+
+            .inner {
+                padding: 25px 10px;
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="outside">
+        <div class="middle">
+            <div class="inner">
+                I am heavily packed
+                <br>
+                &lt;DIV&gt;
+            </div>
+        </div>
+    </div>
+</body>
+</html>
