@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính tiền bán hàng</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 26px;
+        }
+
+        .khung {
+            max-width: 950px;
+            margin: auto;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ccc;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            min-width: 80px;
+            box-sizing: border-box;
+            padding: 6px;
+        }
+
+        input:disabled {
+            background-color: #eee;
+            cursor: not-allowed;
+        }
+
+        input[readonly] {
+            background-color: #f5f5f5;
+        }
+
+        button {
+            padding: 8px 14px;
+            margin: 4px;
+            cursor: pointer;
+        }
+
+        .tong {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        #tong_cong {
+            width: 160px;
+        }
+
+        #thong_bao {
+            color: red;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                font-size: 12pt;
+            }
+
+            .nut-bam,
+            #thong_bao {
+                display: none;
+            }
+
+            .khung {
+                max-width: none;
+                overflow: visible;
+            }
+
+            input {
+                border: none;
+                color: black;
+                background: white;
+            }
+
+            tr {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="khung">
+        <h1>TÍNH TIỀN BÁN HÀNG</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên hàng hóa</th>
+                    <th>Số lượng có</th>
+                    <th>Số lượng mua</th>
+                    <th>Đơn giá</th>
+                    <th>Chọn mua</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>CPU</td>
+                    <td>14</td>
+                    <td>
+                        <input type="number" id="sl_cpu"
+                               value="0" min="1" max="14" step="1"
+                               aria-label="Số lượng mua CPU" disabled>
+                    </td>
+                    <td>120 $</td>
+                    <td>
+                        <input type="checkbox" id="chon_cpu"
+                               aria-label="Chọn mua CPU"
+                               onchange="chonMua('cpu')">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>2</td>
+                    <td>HDD</td>
+                    <td>14</td>
+                    <td>
+                        <input type="number" id="sl_hdd"
+                               value="0" min="1" max="14" step="1"
+                               aria-label="Số lượng mua HDD" disabled>
+                    </td>
+                    <td>10 $</td>
+                    <td>
+                        <input type="checkbox" id="chon_hdd"
+                               aria-label="Chọn mua HDD"
+                               onchange="chonMua('hdd')">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td>RAM</td>
+                    <td>12</td>
+                    <td>
+                        <input type="number" id="sl_ram"
+                               value="0" min="1" max="12" step="1"
+                               aria-label="Số lượng mua RAM" disabled>
+                    </td>
+                    <td>29 $</td>
+                    <td>
+                        <input type="checkbox" id="chon_ram"
+                               aria-label="Chọn mua RAM"
+                               onchange="chonMua('ram')">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>4</td>
+                    <td>ROM</td>
+                    <td>23</td>
+                    <td>
+                        <input type="number" id="sl_rom"
+                               value="0" min="1" max="23" step="1"
+                               aria-label="Số lượng mua ROM" disabled>
+                    </td>
+                    <td>130 $</td>
+                    <td>
+                        <input type="checkbox" id="chon_rom"
+                               aria-label="Chọn mua ROM"
+                               onchange="chonMua('rom')">
+                    </td>
+                </tr>
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <div class="nut-bam">
+                            <button type="button" onclick="tinhTien()">
+                                OK
+                            </button>
+                            <button type="button" onclick="nhapLai()">
+                                Nhập lại
+                            </button>
+                            <button type="button" onclick="inHoaDon()">
+                                In
+                            </button>
+                        </div>
+                    </td>
+
+                    <td colspan="2" class="tong">
+                        <label for="tong_cong">Tổng cộng:</label>
+                        <input type="text" id="tong_cong"
+                               value="0 $" readonly>
+                    </td>
+
+                    <td>
+                        <label>
+                            <input type="checkbox" id="vat">
+                            VAT 10%
+                        </label>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <p id="thong_bao" role="alert"></p>
+    </main>
+
+    <script>
+        const danhSach = [
+            { ma: "cpu", ten: "CPU", soLuongCo: 14, donGia: 120 },
+            { ma: "hdd", ten: "HDD", soLuongCo: 14, donGia: 10 },
+            { ma: "ram", ten: "RAM", soLuongCo: 12, donGia: 29 },
+            { ma: "rom", ten: "ROM", soLuongCo: 23, donGia: 130 }
+        ];
+        function chonMua(ma) {
+            const chon = document.getElementById("chon_" + ma);
+            const soLuong = document.getElementById("sl_" + ma);
+
+            soLuong.disabled = !chon.checked;
+
+            if (chon.checked) {
+                soLuong.value = 1;
+                soLuong.focus();
+            } else {
+                soLuong.value = 0;
+            }
+        }
+
+        function tinhTien() {
+            let tong = 0;
+            const thongBao = document.getElementById("thong_bao");
+            const oTong = document.getElementById("tong_cong");
+
+            thongBao.textContent = "";
+            oTong.value = "";
+
+            for (const sanPham of danhSach) {
+                const chon = document.getElementById(
+                    "chon_" + sanPham.ma
+                );
+                if (chon.checked) {
+                    const oSoLuong = document.getElementById(
+                        "sl_" + sanPham.ma
+                    );
+
+                    const soLuong = Number(oSoLuong.value);
+
+                    if (
+                        !Number.isInteger(soLuong) ||
+                        soLuong < 1 ||
+                        soLuong > sanPham.soLuongCo
+                    ) {
+                        thongBao.textContent =
+                            "Số lượng mua " + sanPham.ten +
+                            " phải là số nguyên từ 1 đến " +
+                            sanPham.soLuongCo + ".";
+
+                        oSoLuong.focus();
+                        return false;
+                    }
+
+                    tong += soLuong * sanPham.donGia;
+                }
+            }
+            if (document.getElementById("vat").checked) {
+                tong *= 1.1;
+            }
+
+            oTong.value = tong.toFixed(2) + " $";
+            return true;
+        }
+
+        function nhapLai() {
+            for (const sanPham of danhSach) {
+                document.getElementById(
+                    "chon_" + sanPham.ma
+                ).checked = false;
+
+                const oSoLuong = document.getElementById(
+                    "sl_" + sanPham.ma
+                );
+
+                oSoLuong.value = 0;
+                oSoLuong.disabled = true;
+            }
+
+            document.getElementById("vat").checked = false;
+            document.getElementById("tong_cong").value = "0 $";
+            document.getElementById("thong_bao").textContent = "";
+        }
+
+        function inHoaDon() {
+            if (tinhTien()) {
+                window.print();
+            }
+        }.
+        document.querySelectorAll(
+            'input[type="number"], input[type="checkbox"]'
+        ).forEach(function (oNhap) {
+            oNhap.addEventListener("input", function () {
+                document.getElementById("tong_cong").value = "";
+                document.getElementById("thong_bao").textContent = "";
+            });
+        });
+    </script>
+</body>
+</html>
