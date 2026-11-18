@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sản phẩm</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #222;
+        }
+
+        main {
+            max-width: 750px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 25px;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: #eee;
+            border-radius: 5px;
+        }
+
+        input {
+            flex: 1;
+            min-width: 150px;
+            padding: 10px;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            background: #238636;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #eee;
+        }
+
+        .dang-chon {
+            background: #dceeff !important;
+        }
+
+        .ten-san-pham {
+            padding: 0;
+            background: transparent;
+            color: #222;
+            text-align: left;
+            font: inherit;
+            overflow-wrap: anywhere;
+        }
+
+        .ten-san-pham:hover {
+            color: #0066cc;
+            text-decoration: underline;
+        }
+
+        .nut-xoa {
+            background: #c62828;
+        }
+
+        #so_luong {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        #thong_bao {
+            min-height: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>QUẢN LÝ SẢN PHẨM</h1>
+
+        <h2>Thêm sản phẩm mới</h2>
+
+        <form id="form_them">
+            <input type="text" id="ten_moi"
+                   placeholder="Nhập tên sản phẩm mới"
+                   aria-label="Tên sản phẩm mới" required>
+
+            <button type="submit">Thêm</button>
+        </form>
+
+        <h2>Sửa tên sản phẩm</h2>
+        <p>Bấm vào tên sản phẩm trong bảng để chọn sửa.</p>
+
+        <form id="form_sua">
+            <input type="text" id="ten_sua"
+                   placeholder="Chưa chọn sản phẩm"
+                   aria-label="Tên sản phẩm cần sửa"
+                   required disabled>
+
+            <button type="submit" id="nut_sua" disabled>
+                Sửa
+            </button>
+        </form>
+
+        <p id="thong_bao" role="status"></p>
+
+        <h2>Danh sách sản phẩm</h2>
+        <p id="so_luong"></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Xóa</th>
+                </tr>
+            </thead>
+            <tbody id="danh_sach"></tbody>
+        </table>
+    </main>
+
+    <script>
+        const sanPham = [
+            "Sony Xperia",
+            "Samsung Galaxy",
+            "Nokia 6",
+            "Xiaomi Redmi Note 4",
+            "Apple iPhone 6S",
+            "Xiaomi Mi 5s Plus",
+            "Apple iPhone 8 Plus",
+            "Fujitsu F-04E",
+            "Oppo A71"
+        ];
+        let viTriSua = -1;
+
+        function thongBao(noiDung, laLoi = false) {
+            const oThongBao = document.getElementById("thong_bao");
+            oThongBao.textContent = noiDung;
+            oThongBao.style.color = laLoi ? "#c62828" : "#18752c";
+        }
+        function hienThi() {
+            const bang = document.getElementById("danh_sach");
+            bang.replaceChildren();
+
+            document.getElementById("so_luong").textContent =
+                sanPham.length + " sản phẩm";
+
+            for (let i = 0; i < sanPham.length; i++) {
+                const dong = document.createElement("tr");
+
+                if (i === viTriSua) {
+                    dong.className = "dang-chon";
+                }
+
+                const cotSTT = document.createElement("td");
+                cotSTT.textContent = i + 1;
+
+                const cotTen = document.createElement("td");
+                const nutTen = document.createElement("button");
+                nutTen.type = "button";
+                nutTen.className = "ten-san-pham";
+                nutTen.textContent = sanPham[i];
+                nutTen.title = "Bấm để sửa tên sản phẩm";
+                nutTen.onclick = function () {
+                    chonSanPham(i);
+                };
+                cotTen.appendChild(nutTen);
+
+                const cotXoa = document.createElement("td");
+                const nutXoa = document.createElement("button");
+                nutXoa.type = "button";
+                nutXoa.className = "nut-xoa";
+                nutXoa.textContent = "Xóa";
+                nutXoa.setAttribute("aria-label", "Xóa " + sanPham[i]);
+                nutXoa.onclick = function () {
+                    xoaSanPham(i);
+                };
+                cotXoa.appendChild(nutXoa);
+
+                dong.append(cotSTT, cotTen, cotXoa);
+                bang.appendChild(dong);
+            }
+
+            if (sanPham.length === 0) {
+                const dong = document.createElement("tr");
+                const cot = document.createElement("td");
+                cot.colSpan = 3;
+                cot.textContent = "Danh sách chưa có sản phẩm.";
+                dong.appendChild(cot);
+                bang.appendChild(dong);
+            }
+        }
+        function themSanPham(event) {
+            event.preventDefault();
+
+            const oNhap = document.getElementById("ten_moi");
+            const ten = oNhap.value.trim();
+
+            if (ten === "") {
+                thongBao("Vui lòng nhập tên sản phẩm.", true);
+                oNhap.focus();
+                return;
+            }
+
+            sanPham.push(ten);
+            hienThi();
+
+            oNhap.value = "";
+            oNhap.focus();
+            thongBao("Đã thêm sản phẩm: " + ten);
+        }
+        function chonSanPham(viTri) {
+            viTriSua = viTri;
+
+            const oSua = document.getElementById("ten_sua");
+            oSua.disabled = false;
+            oSua.value = sanPham[viTri];
+
+            document.getElementById("nut_sua").disabled = false;
+
+            hienThi();
+            oSua.focus();
+            thongBao("Đang chọn sản phẩm: " + sanPham[viTri]);
+        }
+
+        function boChon() {
+            viTriSua = -1;
+            document.getElementById("ten_sua").value = "";
+            document.getElementById("ten_sua").disabled = true;
+            document.getElementById("nut_sua").disabled = true;
+        }
+        function suaSanPham(event) {
+            event.preventDefault();
+
+            if (viTriSua === -1) {
+                thongBao("Bạn chưa chọn sản phẩm để sửa.", true);
+                return;
+            }
+
+            const oSua = document.getElementById("ten_sua");
+            const ten = oSua.value.trim();
+
+            if (ten === "") {
+                thongBao("Tên sản phẩm không được để trống.", true);
+                oSua.focus();
+                return;
+            }
+
+            sanPham[viTriSua] = ten;
+
+            boChon();
+            hienThi();
+            thongBao("Đã sửa tên sản phẩm thành: " + ten);
+        }
+        function xoaSanPham(viTri) {
+            const ten = sanPham[viTri];
+            sanPham.splice(viTri, 1);
+            if (viTri === viTriSua) {
+                boChon();
+            } else if (viTri < viTriSua) {
+                viTriSua--;
+            }
+
+            hienThi();
+            thongBao("Đã xóa sản phẩm: " + ten);
+        }
+
+        document.getElementById("form_them")
+            .addEventListener("submit", themSanPham);
+
+        document.getElementById("form_sua")
+            .addEventListener("submit", suaSanPham);
+        hienThi();
+    </script>
+</body>
+</html>
