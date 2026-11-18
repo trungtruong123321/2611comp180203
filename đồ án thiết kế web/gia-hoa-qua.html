@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra cứu giá hoa quả</title>
+
+    <style>
+        .khung {
+            width: 350px;
+            max-width: 100%;
+            box-sizing: border-box;
+            padding: 15px;
+            border: 1px solid black;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        input {
+            width: 190px;
+            max-width: 100%;
+            padding: 5px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #ket_qua {
+            margin-bottom: 0;
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="khung">
+        <h1>Giá hoa quả</h1>
+
+        <form id="tra_cuu">
+            <input
+                type="text"
+                id="ten_hoa_qua"
+                aria-label="Tên hoa quả"
+                placeholder="Nhập tên hoa quả"
+            >
+            <button type="submit">Xem giá</button>
+        </form>
+
+        <p id="ket_qua" aria-live="polite"></p>
+    </main>
+
+    <script>
+        function xemGia(event) {
+            event.preventDefault();
+
+            let tenHoaQua = document
+                .getElementById("ten_hoa_qua")
+                .value
+                .trim()
+                .toLowerCase()
+                .replace(/\s+/g, " ");
+
+            let ketQua;
+
+            switch (tenHoaQua) {
+                case "ổi":
+                case "dưa hấu":
+                    ketQua = "20000 VNĐ/kg";
+                    break;
+
+                case "táo":
+                    ketQua = "30000 VNĐ/kg";
+                    break;
+
+                case "cam":
+                case "chôm chôm":
+                    ketQua = "40000 VNĐ/kg";
+                    break;
+
+                case "măng cụt":
+                    ketQua = "50000 VNĐ/kg";
+                    break;
+
+                default:
+                    ketQua = "Tìm không thấy";
+            }
+
+            document.getElementById("ket_qua").textContent = ketQua;
+        }
+
+        document
+            .getElementById("tra_cuu")
+            .addEventListener("submit", xemGia);
+    </script>
+</body>
+</html>
