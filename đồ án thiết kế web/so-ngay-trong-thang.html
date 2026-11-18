@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính số ngày trong tháng</title>
+
+    <style>
+        body {
+            margin: 30px;
+            font-family: "Times New Roman", serif;
+        }
+
+        .khung {
+            width: 400px;
+            max-width: 100%;
+            box-sizing: border-box;
+            border: 1px solid black;
+            padding: 15px;
+        }
+
+        input {
+            width: 180px;
+            padding: 5px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #ket_qua {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="khung">
+        <form id="form_tinh">
+            <input
+                type="number"
+                id="thang"
+                placeholder="Nhập tháng từ 1 đến 12"
+                aria-label="Tháng cần tính"
+                required
+                step="1"
+            >
+
+            <button type="submit">Tính số ngày</button>
+        </form>
+
+        <p id="ket_qua" aria-live="polite"></p>
+    </main>
+
+    <script>
+        function tinhSoNgay(event) {
+            event.preventDefault();
+
+            let thang = Number(document.getElementById("thang").value);
+            let ketQua;
+
+            switch (thang) {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    ketQua = "Tháng " + thang + " có 31 ngày";
+                    break;
+
+                case 2:
+                    ketQua = "Tháng 2 có 28 hoặc 29 ngày";
+                    break;
+
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    ketQua = "Tháng " + thang + " có 30 ngày";
+                    break;
+
+                default:
+                    ketQua = "Vui lòng nhập tháng là số nguyên từ 1 đến 12.";
+            }
+
+            document.getElementById("ket_qua").textContent = ketQua;
+        }
+
+        document.getElementById("form_tinh")
+            .addEventListener("submit", tinhSoNgay);
+    </script>
+</body>
+</html>
