@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đổi năm dương lịch sang năm âm lịch</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        .khung {
+            width: 450px;
+            max-width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #333;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 180px;
+            padding: 8px;
+        }
+
+        button {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        #ket_qua {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="khung">
+        <h1>Đổi năm dương lịch sang năm âm lịch</h1>
+
+        <form id="doi_nam">
+            <label for="nam_duong_lich">Nhập năm dương lịch:</label>
+
+            <input
+                type="number"
+                id="nam_duong_lich"
+                placeholder="Ví dụ: 2026"
+                min="1"
+                step="1"
+                required
+            >
+
+            <button type="submit">Đổi năm</button>
+        </form>
+
+        <p id="ket_qua" aria-live="polite"></p>
+    </main>
+
+    <script>
+        function doiNam(event) {
+            event.preventDefault();
+
+            let nam_duong_lich =
+                Number(document.getElementById("nam_duong_lich").value);
+
+            if (!Number.isSafeInteger(nam_duong_lich) || nam_duong_lich <= 0) {
+                document.getElementById("ket_qua").textContent =
+                    "Vui lòng nhập năm là một số nguyên dương.";
+                return;
+            }
+
+            let can = "";
+            let chi = "";
+            switch (nam_duong_lich % 10) {
+                case 0: can = "Canh"; break;
+                case 1: can = "Tân"; break;
+                case 2: can = "Nhâm"; break;
+                case 3: can = "Quý"; break;
+                case 4: can = "Giáp"; break;
+                case 5: can = "Ất"; break;
+                case 6: can = "Bính"; break;
+                case 7: can = "Đinh"; break;
+                case 8: can = "Mậu"; break;
+                case 9: can = "Kỷ"; break;
+            }
+            switch (nam_duong_lich % 12) {
+                case 0: chi = "Thân"; break;
+                case 1: chi = "Dậu"; break;
+                case 2: chi = "Tuất"; break;
+                case 3: chi = "Hợi"; break;
+                case 4: chi = "Tý"; break;
+                case 5: chi = "Sửu"; break;
+                case 6: chi = "Dần"; break;
+                case 7: chi = "Mẹo"; break;
+                case 8: chi = "Thìn"; break;
+                case 9: chi = "Tỵ"; break;
+                case 10: chi = "Ngọ"; break;
+                case 11: chi = "Mùi"; break;
+            }
+
+            let nam_am_lich = can + " " + chi;
+
+            document.getElementById("ket_qua").textContent =
+                "Năm âm lịch: " + nam_am_lich;
+        }
+
+        document.getElementById("doi_nam")
+            .addEventListener("submit", doiNam);
+    </script>
+</body>
+</html>
